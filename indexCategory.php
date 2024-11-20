@@ -1,4 +1,3 @@
-
 <?php
 require_once(__DIR__ . '/Config/init.php');
 
@@ -31,27 +30,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["restoreCategoryId"]))
             color: #333;
         }
 
-        .header {
-            background-color: #6c757d;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .btn-container {
-            margin: 30px 0;
-            display: flex;
-            justify-content: space-between;
-        }
-
         .btn-primary {
             background-color: #007bff;
-            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
 
         .btn-success {
             background-color: #28a745;
-            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
         }
 
         .table-container {
@@ -72,6 +72,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["restoreCategoryId"]))
             background-color: #e9ecef;
         }
 
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
         .no-categories {
             text-align: center;
             padding: 20px;
@@ -88,50 +106,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["restoreCategoryId"]))
             text-decoration: none;
         }
 
-        .restore-section {
-            text-align: left;
+        .table thead th {
+            text-align: center;
+        }
+
+        .restore {
             margin-top: 20px;
+            
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Category List</h1>
-    </div>
-
     <div class="container mt-5">
-        <div class="btn-container">
-            <a href="index.php" class="btn btn-primary">Back to Index</a>
-            <a href="View/category/create.php" class="btn btn-success">Add New Category</a>
+        <!-- Navigation Buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h4">Category Dashboard</h1>
+            <div class="btn-group">
+                <a href="index.php" class="btn btn-primary">Back to Index</a>
+                <a href="View/category/create.php" class="btn btn-success">Add New Category</a>
+            </div>
         </div>
 
+        <!-- Category Table -->
         <?php if (!empty($categories)): ?>
             <div class="table-container">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Category Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($categories as $category): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($category['id']); ?></td>
-                                <td><?php echo htmlspecialchars($category['category_name']); ?></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a href="View/category/detail.php?id=<?php echo $category['id']; ?>" class="btn btn-info btn-sm">Detail</a>
-                                        <a href="View/category/update.php?id=<?php echo $category['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="View/category/delete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-header">
+                        Category List
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($categories as $category): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($category['id']); ?></td>
+                                            <td><?php echo htmlspecialchars($category['category_name']); ?></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="View/category/detail.php?id=<?php echo $category['id']; ?>" class="btn btn-success btn-sm">Detail</a>
+                                                    <a href="View/category/update.php?id=<?php echo $category['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="View/category/delete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         <?php else: ?>
             <div class="no-categories">
@@ -139,14 +171,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["restoreCategoryId"]))
             </div>
         <?php endif; ?>
 
-        <div class="restore-section">
-            <form method="POST">
-                <input type="hidden" name="restoreCategoryId" value="<?php echo $category['id']; ?>">
-                <button type="submit" class="btn btn-secondary">Restore</button>
-            </form>
-        </div>
+        <form method="POST">
+            <input type="hidden" name="restoreCategoryId" value="<?php echo $category['id']; ?>">
+            <button type="submit" class="btn btn-secondary restore">Restore</button>
+        </form>
     </div>
 </body>
 
 </html>
-

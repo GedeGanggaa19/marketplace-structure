@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['product_name'] = "Product Name is required";
     } else {
         $product_name = $_POST["product_name"];
-    }
+    } 
 
     // Validate price
     if (empty($_POST["price"])) {
@@ -88,68 +88,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            padding: 20px;
+            background-color: #f8f9fa;
+            padding-top: 40px;
         }
 
-        form {
-            width: 75%;
+        .card {
+            max-width: 600px;
             margin: auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        label {
-            margin-top: 10px;
+        .form-label {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Update Product</h1>
+        <div class="card">
+            <h2 class="text-center mb-4">Update Product</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="product_name" class="form-label">Product Name</label>
+                    <input type="text" name="product_name" class="form-control" id="product_name" value="<?php echo htmlspecialchars($product_name); ?>">
+                    <?php if (isset($errors['product_name'])): ?>
+                        <div class="text-danger small mt-1"><?php echo $errors['product_name']; ?></div>
+                    <?php endif; ?>
+                </div>
 
-        <form method="POST">
-            <div class="mb-3">
-                <label for="product_name" class="form-label">Product Name</label>
-                <input type="text" name="product_name" class="form-control" id="product_name" value="<?php echo htmlspecialchars($product_name); ?>">
-                <?php if (isset($errors['product_name'])): ?>
-                    <div class="text-danger"><?php echo $errors['product_name']; ?></div>
-                <?php endif; ?>
-            </div>
+                <div class="mb-3">
+                    <label for="category_id" class="form-label">Category</label>
+                    <select name="category_id" class="form-select" id="category_id">
+                        <option value="">Select a Category</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['id']; ?>" <?php echo ($category['id'] == $category_id) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['category_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if (isset($errors['category_id'])): ?>
+                        <div class="text-danger small mt-1"><?php echo $errors['category_id']; ?></div>
+                    <?php endif; ?>
+                </div>
 
-            <div class="mb-3">
-                <label for="category_id" class="form-label">Category</label>
-                <select name="category_id" class="form-control" id="category_id">
-                    <option value="">Select a Category</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>" <?php echo ($category['id'] == $category_id) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($category['category_name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <?php if (isset($errors['category_id'])): ?>
-                    <div class="text-danger"><?php echo $errors['category_id']; ?></div>
-                <?php endif; ?>
-            </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" name="price" class="form-control" id="price" value="<?php echo htmlspecialchars($price); ?>">
+                    <?php if (isset($errors['price'])): ?>
+                        <div class="text-danger small mt-1"><?php echo $errors['price']; ?></div>
+                    <?php endif; ?>
+                </div>
 
-            <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
-                <input type="text" name="price" class="form-control" id="price" value="<?php echo htmlspecialchars($price); ?>">
-                <?php if (isset($errors['price'])): ?>
-                    <div class="text-danger"><?php echo $errors['price']; ?></div>
-                <?php endif; ?>
-            </div>
+                <div class="mb-3">
+                    <label for="stock" class="form-label">Stock</label>
+                    <input type="text" name="stock" class="form-control" id="stock" value="<?php echo htmlspecialchars($stock); ?>">
+                    <?php if (isset($errors['stock'])): ?>
+                        <div class="text-danger small mt-1"><?php echo $errors['stock']; ?></div>
+                    <?php endif; ?>
+                </div>
 
-            <div class="mb-3">
-                <label for="stock" class="form-label">Stock</label>
-                <input type="text" name="stock" class="form-control" id="stock" value="<?php echo htmlspecialchars($stock); ?>">
-                <?php if (isset($errors['stock'])): ?>
-                    <div class="text-danger"><?php echo $errors['stock']; ?></div>
-                <?php endif; ?>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Update Product</button>
-            <a href="../../index.php" class="btn btn-secondary">Cancel</a>
-        </form>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                    <a href="../../index.php" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

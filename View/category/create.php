@@ -37,34 +37,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            padding: 20px;
+            padding-top: 50px;
+            background-color: #f8f9fa;
         }
-        form {
+        .form-container {
             max-width: 600px;
             margin: auto;
         }
-        label {
-            margin-top: 10px;
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Create Category</h1>
-        
-        <form method="POST">
-            <div class="mb-3">
-                <label for="category_name" class="form-label">Category Name</label>
-                <input type="text" name="category_name" class="form-control" id="category_name" value="<?php echo htmlspecialchars($category_name ?? ''); ?>">
-                <?php if (isset($errors['category_name'])): ?>
-                    <div class="text-danger"><?php echo $errors['category_name']; ?></div>
-                <?php endif; ?>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Create Category</button>
-            <a href="../../indexCategory.php" class="btn btn-secondary">Cancel</a>
-        </form>
+    <div class="container form-container">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">Add New Category</h2>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="category_name" class="form-label">Category Name</label>
+                    <input type="text" name="category_name" class="form-control" id="category_name" 
+                        value="<?php echo htmlspecialchars($category_name ?? ''); ?>" placeholder="Enter category name">
+                    <?php if (isset($errors['category_name'])): ?>
+                        <div class="text-danger mt-1"><?php echo $errors['category_name']; ?></div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Create Category</button>
+                    <a href="../../indexCategory.php" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 
