@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="category_name" class="form-label">Category Name</label>
                             <input type="text" name="category_name" class="form-control" id="category_name" 
-                                value="<?php echo htmlspecialchars($category_name); ?>" placeholder="Enter new category name">
+                                Nvalue="<?php echo htmlspecialchars($category_name); ?>" placeholder="Enter new category name">
                             <?php if (isset($errors['category_name'])): ?>
                                 <div class="text-danger mt-1"><?php echo $errors['category_name']; ?></div>
                             <?php endif; ?>
